@@ -1,34 +1,35 @@
 package org.vb.flickrdphotos.entity;
 
-import android.util.Log;
+import android.content.Context;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.codepath.apps.restclienttemplate.R;
+import com.google.gson.annotations.SerializedName;
 
 public class Photo {
 
-    private static final String TAG = Photo.class.getSimpleName();
-
+    @SerializedName("id")
     private String uid;
+    @SerializedName("title")
     private String name;
+    @SerializedName("farm")
+    private int farm;
+    @SerializedName("server")
+    private int server;
+    @SerializedName("secret")
+    private String secret;
+
     private String url;
 
-    public Photo(JSONObject object) {
-        try {
-            this.uid = object.getString("id");
-            this.name = object.getString("title");
-            this.url = "http://farm" + object.getInt("farm") + ".staticflickr.com/" + object.getInt("server") + "/" + uid + "_" + object.getString("secret") + ".jpg";
-        } catch (JSONException e) {
-            Log.e(TAG, "" + e.getLocalizedMessage());
-        }
+    public Photo() {
     }
 
     public String getUid() {
         return uid;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrl(Context context) {
+        return context.getString(R.string.image_load_url, farm, server, uid, secret);
+
     }
 
     public String getName() {
@@ -41,7 +42,7 @@ public class Photo {
 
     @Override
     public String toString() {
-        return "Photo{" +
+        return "Item{" +
                 "uid='" + uid + '\'' +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +

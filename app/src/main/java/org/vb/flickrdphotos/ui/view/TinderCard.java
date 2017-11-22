@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
-import org.vb.flickrdphotos.entity.Photo;
+
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
@@ -20,6 +20,8 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipeView;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 
+import org.vb.flickrdphotos.entity.Photo;
+
 
 @Layout(R.layout.tinder_card_view)
 public class TinderCard {
@@ -30,22 +32,22 @@ public class TinderCard {
     @SwipeView
     private FrameLayout mSwipeView;
 
-    private Photo mProfile;
+    private Photo photo;
     private Context mContext;
     private Point mCardViewHolderSize;
     private Callback mCallback;
     private SwipeDirection lastSwipeDirection;
 
-    public TinderCard(Context context, Photo profile, Point cardViewHolderSize, Callback callback) {
-        mContext = context;
-        mProfile = profile;
-        mCardViewHolderSize = cardViewHolderSize;
-        mCallback = callback;
+    public TinderCard(Context context, Photo photo, Point cardViewHolderSize, Callback callback) {
+        this.mContext = context;
+        this.photo = photo;
+        this.mCardViewHolderSize = cardViewHolderSize;
+        this.mCallback = callback;
     }
 
     @Resolve
     private void onResolved() {
-        Glide.with(mContext).load(mProfile.getUrl()).into(profileImageView);
+        Glide.with(mContext).load(photo.getUrl(mContext)).into(profileImageView);
     }
 
     @Click(R.id.profileImageView)
@@ -82,10 +84,6 @@ public class TinderCard {
 
     @SwipeTouch
     private void onSwipeTouch(float xStart, float yStart, float xCurrent, float yCurrent) {
-//        float cardHolderDiagonalLength = (float) Math.sqrt(Math.pow(mCardViewHolderSize.x, 2) + (Math.pow(mCardViewHolderSize.y, 2)));
-//        float distance = (float) Math.sqrt(Math.pow(xCurrent - xStart, 2) + (Math.pow(yCurrent - yStart, 2)));
-//        float alpha = 1 - distance / cardHolderDiagonalLength;
-//        mSwipeView.setAlpha(alpha);
     }
 
     public interface Callback {

@@ -1,7 +1,8 @@
 package org.vb.flickrdphotos.activity;
 
-import org.vb.flickrdphotos.entity.Photo;
 import com.codepath.apps.restclienttemplate.R;
+
+import org.vb.flickrdphotos.entity.Photo;
 import org.vb.flickrdphotos.models.CountManager;
 import org.vb.flickrdphotos.models.PhotosManager;
 import org.vb.flickrdphotos.ui.view.TinderCard;
@@ -87,21 +88,23 @@ public class PhotosActivity extends AppCompatActivity implements TinderCard.Call
 
     private void initManagers() {
         countManager = new CountManager();
-        photosManager = new PhotosManager(new PhotosManager.Listener() {
-            @Override
-            public void onLoadingFinished(List<Photo> list) {
-                mSwipeView.removeAllViews();
-                swipeRefreshLayout.setRefreshing(false);
-                for (Photo photo : list) {
-                    mSwipeView.addView(new TinderCard(PhotosActivity.this, photo, cardViewHolderSize, PhotosActivity.this));
-                }
-            }
+        photosManager = new PhotosManager(
+                new PhotosManager.Listener() {
+                    @Override
+                    public void onLoadingFinished(List<Photo> list) {
+                        mSwipeView.removeAllViews();
+                        swipeRefreshLayout.setRefreshing(false);
+                        for (Photo item : list) {
+                            mSwipeView.addView(new TinderCard(PhotosActivity.this, item, cardViewHolderSize, PhotosActivity.this));
+                        }
+                    }
 
-            @Override
-            public void onLoadingFailed() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+                    @Override
+                    public void onLoadingFailed() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
         photosManager.loadPhotos();
     }
 

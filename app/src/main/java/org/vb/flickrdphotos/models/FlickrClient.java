@@ -22,7 +22,7 @@ public class FlickrClient extends OAuthBaseClient {
     }
 
     public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("?&format=json&nojsoncallback=1&method=flickr.people.getPhotos&user_id=157377817%40N08");
+        String apiUrl = getApiUrl("?method=flickr.people.getItems&api_key=cb548cec8f7d5dd37f863e807939b9d4&user_id=157377817%40N08&format=rest");
         client.get(apiUrl, null, handler);
     }
 }
